@@ -37,9 +37,8 @@ if __name__=="__main__":
         if process.poll() is None: 
             # still playing 
             elapsed_mm = int( (time.time() - start_time) // 60 )
-            if status["pos_mm"] != elapsed_mm:
-                status["pos_mm"] = elapsed_mm
-                save_status() 
+            status["pos_mm"] += elapsed_mm
+            save_status() 
         else: 
             # finished media so increment and play next
             index += 1 
