@@ -6,11 +6,6 @@ media = {
     "flv":sorted( glob.glob( os.path.join( player_dir, "media","flv","*.flv" ) ) )
 }
 
-
-# playcmd = "omxplayer -o hdmi -l hh:mm:ss /home/pi/opera-player/media/"
-playcmd = "lslsl -o hdmi -l hh:mm:ss /home/pi/opera-player/media/"
-process = subprocess.Popen(playcmd.split(), stdout=subprocess.PIPE)
-
 def save_status():
     with open(os.path.join(player_dir,"status.json"), "w") as f:
         json.dump(status, f)
