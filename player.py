@@ -42,7 +42,7 @@ if __name__=="__main__":
         else: 
             # finished media so increment and play next
             index += 1 
-            if index >= len( media["folder"] ):
+            if index >= len( media[folder] ):
                 # swap folder 
                 folder = "flv" if folder == "mp4" else "mp4"
                 index = 0 
