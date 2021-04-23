@@ -36,7 +36,7 @@ if __name__=="__main__":
     while True: 
         if process.poll() is None: 
             # still playing 
-            elapsed_mm = (time.time() - start_time) // 60 
+            elapsed_mm = int( (time.time() - start_time) // 60 )
             if status["pos_mm"] != elapsed_mm:
                 status["pos_mm"] = elapsed_mm
                 save_status() 
