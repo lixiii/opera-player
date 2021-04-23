@@ -6,7 +6,7 @@ m = sorted(glob.glob("*.mp4"))
 with open("lists.txt","a") as f:
     for e in m:
         name = e.split(".")[0] + ".mp4" 
-        # os.rename(e,name) 
+        os.rename(e,name) 
         print(f"Renaming {e}")
         f.write(name + "<--" + e + "\n")
 
