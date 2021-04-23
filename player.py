@@ -27,6 +27,7 @@ if __name__=="__main__":
     media_path = os.path.join(player_dir, "media", media[folder][index])
     try: 
         process = subprocess.Popen(f"omxplayer -o hdmi -l 00:{pos_mm}:00 {media_path}".split(), stdout=subprocess.PIPE)
+        print("Running command ", f"omxplayer -o hdmi -l 00:{pos_mm}:00 {media_path}")
     except Exception as e: 
         print(e) 
     start_time = time.time()
@@ -51,6 +52,10 @@ if __name__=="__main__":
             status["pos_mm"] = 0
             save_status()
             media_path = os.path.join(player_dir, "media", media[folder][index])
-            process = subprocess.Popen(f"omxplayer -o hdmi -l 00:{pos_mm}:00 {media_path}".split(), stdout=subprocess.PIPE)
+            try:
+                process = subprocess.Popen(f"omxplayer -o hdmi -l 00:{pos_mm}:00 {media_path}".split(), stdout=subprocess.PIPE)
+                print("Running command ", f"omxplayer -o hdmi -l 00:{pos_mm}:00 {media_path}")
+            except Exception as e: 
+                print(e)
             start_time = time.time()
         time.sleep(0.5)
