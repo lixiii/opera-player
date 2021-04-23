@@ -23,11 +23,11 @@ if __name__=="__main__":
     # start playing from memory
     index = status["index"]
     folder = status["folder"]
-    pos_mm = status["pos_mm"]
+    initial_pos = status["pos_mm"]
     media_path = os.path.join(player_dir, "media", media[folder][index])
     try: 
-        process = subprocess.Popen(f"omxplayer -o hdmi -l 00:{pos_mm}:00 {media_path}".encode("gbk").split(), stdout=subprocess.PIPE)
-        print("Running command ", f"omxplayer -o hdmi -l 00:{pos_mm}:00 {media_path}")
+        process = subprocess.Popen(f"omxplayer -o hdmi -l 00:{initial_pos}:00 {media_path}".encode("gbk").split(), stdout=subprocess.PIPE)
+        print("Running command ", f"omxplayer -o hdmi -l 00:{initial_pos}:00 {media_path}")
     except Exception as e: 
         print(e) 
     start_time = time.time()
@@ -37,9 +37,10 @@ if __name__=="__main__":
         if process.poll() is None: 
             # still playing 
             elapsed_mm = int( (time.time() - start_time) // 60 )
-            pos_mm += elapsed_mm
-            status["pos_mm"] = pos_mm
-            save_status() 
+            pos_mm = initial_pos + elapsed_mm
+            if status["pos_mm"] != pos_mm:
+                status["pos_mm"] = pos_mm
+                save_status() 
         else: 
             # finished media so increment and play next
             index += 1 
@@ -53,9 +54,10 @@ if __name__=="__main__":
             save_status()
             media_path = os.path.join(player_dir, "media", media[folder][index])
             try:
-                process = subprocess.Popen(f"omxplayer -o hdmi -l 00:{pos_mm}:00 {media_path}".split(), stdout=subprocess.PIPE)
-                print("Running command ", f"omxplayer -o hdmi -l 00:{pos_mm}:00 {media_path}")
+                process = subprocess.Popen(f"omxplayer -o hdmi -l 00:00:00 {media_path}".split(), stdout=subprocess.PIPE)
+                print("Running command ", f"omxplayer -o hdmi -l 00:00:00 {media_path}")
             except Exception as e: 
                 print(e)
             start_time = time.time()
+            initial_pos = 0
         time.sleep(0.5)
